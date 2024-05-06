@@ -267,3 +267,14 @@
 265	575	7366555406491779	lodgenet_gc_adapter_rp2040.elf	771025aac7e28bf8
 36	271	7366555986291595	CMakeFiles/lodgenet_gc_adapter_rp2040.dir/main.c.obj	6f7601a54fb30352
 271	565	7366555987971865	lodgenet_gc_adapter_rp2040.elf	771025aac7e28bf8
+32	302	7366565436656957	CMakeFiles/lodgenet_gc_adapter_rp2040.dir/common/devices/xinput.c.obj	dd187ad5d669f871
+28	305	7366565436676958	CMakeFiles/lodgenet_gc_adapter_rp2040.dir/main.c.obj	6f7601a54fb30352
+305	631	7366565438617223	lodgenet_gc_adapter_rp2040.elf	771025aac7e28bf8
+38	266	7366566471036419	CMakeFiles/lodgenet_gc_adapter_rp2040.dir/main.c.obj	6f7601a54fb30352
+267	568	7366566472786403	lodgenet_gc_adapter_rp2040.elf	771025aac7e28bf8
+35	259	7366567222944884	CMakeFiles/lodgenet_gc_adapter_rp2040.dir/main.c.obj	6f7601a54fb30352
+260	551	7366567224595168	lodgenet_gc_adapter_rp2040.elf	771025aac7e28bf8
+34	258	7366567697460979	CMakeFiles/lodgenet_gc_adapter_rp2040.dir/main.c.obj	6f7601a54fb30352
+258	568	7366567699304153	lodgenet_gc_adapter_rp2040.elf	771025aac7e28bf8
+36	265	7366569746696356	CMakeFiles/lodgenet_gc_adapter_rp2040.dir/main.c.obj	6f7601a54fb30352
+265	567	7366569748457638	lodgenet_gc_adapter_rp2040.elf	771025aac7e28bf8

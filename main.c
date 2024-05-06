@@ -92,69 +92,74 @@ void joybus_itf_poll(joybus_input_s **out)
     p1.analog_right_x = 0;
     p1.analog_right_y = 0;
 
-    // Latch by pulsing each
-    //gpio_put(CLK_PIN, 0);
-    //sleep_us(PULSE_TIME_US);
-    //gpio_put(CLK_PIN, 1);
-    //sleep_us(PULSE_TIME_US);
-
-    // Retrieve and set data
-    for(uint i = 0; i < PULSE_COUNT; i++)
+    // Check if controller is connected
+    if(!gpio_get(P1_IN_PIN))
     {
-        int gi = i-1;
-        int a = gi % 8;
+        p1.analog_left_x = 127;
+        p1.analog_left_y = 127;
+        p1.analog_right_x = 127;
+        p1.analog_right_y = 127;
+    }
+    else
+    {
+        // Retrieve and set data
+        for(uint i = 0; i < PULSE_COUNT; i++)
+        {
+            int gi = i-1;
+            int a = gi % 8;
 
-        gpio_put(CLK_PIN, 0);
-        sleep_us(PULSE_TIME_US);
-        gpio_put(CLK_PIN, 1);
-        sleep_us(5);
-        bool b = !gpio_get(P1_IN_PIN);
-        switch(gi)
-        {   
-            default:
-            break;
+            gpio_put(CLK_PIN, 0);
+            sleep_us(PULSE_TIME_US);
+            gpio_put(CLK_PIN, 1);
+            sleep_us(5);
+            bool b = !gpio_get(P1_IN_PIN);
+            switch(gi)
+            {   
+                default:
+                break;
 
-            // Buttons 1
-            case 0 ... 7:
-                p1.buttons_1 |= (b<<a);
-            break;
+                // Buttons 1
+                case 0 ... 7:
+                    p1.buttons_1 |= (b<<a);
+                break;
 
-            // Buttons 2
-            case 8 ... (8+7):
-                p1.buttons_2 |= (b<<a);
-            break;
+                // Buttons 2
+                case 8 ... (8+7):
+                    p1.buttons_2 |= (b<<a);
+                break;
 
-            // LX
-            case 16 ... (16+7):
-                p1.analog_left_x |= (b<<(7-a));
-            break;
+                // LX
+                case 16 ... (16+7):
+                    p1.analog_left_x |= (b<<(7-a));
+                break;
 
-            // LY
-            case 24 ... (24+7):
-                p1.analog_left_y |= (b<<(7-a));
-            break;
+                // LY
+                case 24 ... (24+7):
+                    p1.analog_left_y |= (b<<(7-a));
+                break;
 
-            // RX
-            case 32 ... (32+7):
-                p1.analog_right_x |= (b<<(7-a));
-            break;
+                // RX
+                case 32 ... (32+7):
+                    p1.analog_right_x |= (b<<(7-a));
+                break;
 
-            // RY
-            case 40 ... (40+7):
-                p1.analog_right_y |= (b<<(7-a));
-            break;
+                // RY
+                case 40 ... (40+7):
+                    p1.analog_right_y |= (b<<(7-a));
+                break;
 
-            // TL
-            case 48 ... (48+7):
-                p1.analog_trigger_l |= (b<<(7-a));
-            break;
+                // TL
+                case 48 ... (48+7):
+                    p1.analog_trigger_l |= (b<<(7-a));
+                break;
 
-            // TR
-            case 56 ... (56+7):
-                p1.analog_trigger_r |= (b<<(7-a));
-            break;
+                // TR
+                case 56 ... (56+7):
+                    p1.analog_trigger_r |= (b<<(7-a));
+                break;
+            }
+            sleep_us(PULSE_TIME_US); 
         }
-        sleep_us(PULSE_TIME_US); 
     }
 
     _port_joybus[0].port_itf = 0;
@@ -177,9 +182,9 @@ void joybus_itf_poll(joybus_input_s **out)
     _port_joybus[0].stick_right_y       = 255-p1.analog_right_y;
     _port_joybus[0].stick_right_x       = 255-p1.analog_right_x;
 
-    _port_joybus[0].analog_trigger_l    = p1.analog_trigger_l;
+    _port_joybus[0].analog_trigger_l    = 255-p1.analog_trigger_l;
     // Copy data
-    _port_joybus[0].analog_trigger_r    = p1.analog_trigger_r;
+    _port_joybus[0].analog_trigger_r    = 255-p1.analog_trigger_r;
 
 }
 
@@ -204,7 +209,7 @@ void joybus_itf_init()
     gpio_put(CLK_PIN, 1);
 
     gpio_init(P1_IN_PIN);
-    gpio_pull_up(P1_IN_PIN);
+    gpio_pull_down(P1_IN_PIN);
     gpio_set_dir(P1_IN_PIN, GPIO_IN);
 }
 
